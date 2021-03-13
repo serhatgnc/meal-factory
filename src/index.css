@@ -131,6 +131,7 @@ code {
   align-items: center;
 }
 .listall-button {
+  width: 15em;
   height: 100%;
   display: flex;
   justify-content: center;
@@ -143,11 +144,12 @@ code {
   color: #550527;
   font-family: "Kanit";
   font-size: 1.25em;
-  font-weight: 300;
+  font-weight: 500;
   border: none;
   border-radius: 5em;
   padding: 0.2em;
 }
+/* input */
 .listAll-divider {
   display: flex;
   border-top: 2px solid #464646;
@@ -169,7 +171,8 @@ code {
   display: flex;
   flex-direction: column;
   align-items: center;
-  background-color: #de8f6e;
+  background-color: #cddfa0;
+  border: 2px solid #550527;
   border-radius: 3em;
   margin: 1em;
 }
@@ -183,7 +186,7 @@ code {
   width: 100%;
   flex-wrap: wrap;
 }
-.list-all-ingredient {
+.list-all-ingredients .list-all-ingredient {
   margin-top: 0.5em;
   margin-left: 1em;
   display: flex;
@@ -191,20 +194,52 @@ code {
   align-items: center;
   flex-direction: column;
 }
-.list-all-ingredient img {
+.list-all-ingredients .list-all-ingredient img {
   width: 3em;
+}
+/* allmeal & its buttons */
+.allMealCategory {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+.allMealCategory .mealCategory {
+  margin: 1em 2em;
+  padding: 5em;
+  width: 51em;
+  height: 55em;
+  cursor: pointer;
+  background-color: #cddfa0;
+  border: 5px solid #550527;
+  border-radius: 50%;
+  outline: none;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+.allMealCategory .mealCategory p {
+  font-family: "Kanit";
+  font-size: 1.2em;
+  width: 90%;
+  margin-bottom: 6em;
+  text-align: left;
+}
+.allMealCategory .mealCategory:hover {
+  border-color: #de8f6e;
 }
 /* Global */
 .button {
   font-family: "Kanit";
   font-size: 1.25em;
-  font-weight: 300;
+  font-weight: 500;
   padding: 0.2em 0.5em;
   border: none;
   background-color: #de8f6e;
   color: #550527;
   border-radius: 5em;
   outline: none;
+  cursor: pointer;
 }
 .button:hover {
   background-color: #550527;
@@ -222,9 +257,9 @@ code {
   border: none;
   outline: none;
   cursor: pointer;
-  padding: 0.2em;
+  padding: 0.1em;
   border-radius: 50%;
-  color: #de8f6e;
+  color: #cddfa0;
 }
 #toTheTop:hover {
   color: #e6e49f;

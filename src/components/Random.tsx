@@ -48,17 +48,15 @@ const Random = () => {
         <h3 style={{ opacity: 0.9, userSelect: "none" }}>Ingredients</h3>
         <div className="ingredients">
           {ingredients?.map((ingredient, index) => {
-            if (ingredient) {
-              return (
-                <div key={index} className="ingredient">
-                  <img
-                    src={`https://www.themealdb.com/images/ingredients/${ingredient}.png`}
-                    alt=""
-                  />
-                  <p style={{ fontSize: "0.75em" }}>{ingredient}</p>
-                </div>
-              );
-            }
+            return (
+              <div key={index} className="ingredient">
+                <img
+                  src={`https://www.themealdb.com/images/ingredients/${ingredient}.png`}
+                  alt=""
+                />
+                <p style={{ fontSize: "0.75em" }}>{ingredient}</p>
+              </div>
+            );
           })}
         </div>
       </div>

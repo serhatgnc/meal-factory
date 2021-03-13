@@ -1,8 +1,9 @@
 import { AllMealCategories, MealByName } from "global";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { getAllMealCategories, getMealByName } from "src/utils/fetchData";
 
 const ListAll = () => {
+  const [input, setInput] = useState<HTMLInputElement>();
   const [allMealCategories, setAllMealCategories] = useState<
     AllMealCategories[]
   >([]);
@@ -12,12 +13,18 @@ const ListAll = () => {
   const scrollButton = useRef<HTMLButtonElement>(null);
 
   const listAllMealCategories = async () => {
+    setSearchMeal([]);
     let allMeal = await getAllMealCategories();
-    console.log(allMeal);
+    setAllMealCategories(allMeal);
+    let input = inputRef?.current;
+    if (input) {
+      input.value = "";
+    }
   };
 
   const inputFunction = async () => {
-    let searchTerm = inputRef?.current?.value;
+    setAllMealCategories([]);
+    let searchTerm: string | undefined = input?.value;
     if (searchTerm) {
       let meal = await getMealByName(searchTerm);
       let arrayIngredients: String[][] = [];
@@ -32,10 +39,15 @@ const ListAll = () => {
       });
       setIngredients(arrayIngredients);
       setSearchMeal(meal);
-    }else{
-      
     }
   };
+
+  const getSelectedCategory = (
+    e: React.MouseEvent<HTMLButtonElement, MouseEvent>
+  ) => {
+    console.log(e.currentTarget.getAttribute("data-category"));
+  };
+
   window.onscroll = () => {
     scrollFunction();
   };
@@ -45,6 +57,7 @@ const ListAll = () => {
       behavior: "smooth",
     });
   };
+
   const scrollFunction = () => {
     if (scrollButton && scrollButton.current) {
       var buttonElm = scrollButton?.current as HTMLButtonElement;
@@ -59,6 +72,12 @@ const ListAll = () => {
     }
   };
 
+  useEffect(() => {
+    console.log(allMealCategories);
+  }, [allMealCategories]);
+  useEffect(() => {
+    if (inputRef?.current) setInput(inputRef?.current);
+  }, []);
   return (
     <div>
       <div className="listall-triggers">
@@ -114,7 +133,24 @@ const ListAll = () => {
           })}
         </div>
       )}
-      {}
+      {allMealCategories && (
+        <div className="allMealCategory">
+          {allMealCategories?.map((mealCategory, index) => {
+            return (
+              <button
+                className="mealCategory"
+                key={index}
+                data-category={mealCategory.strCategory}
+                onClick={(e) => getSelectedCategory(e)}
+              >
+                <h1 style={{ color: "#550527" }}>{mealCategory.strCategory}</h1>
+                <img src={mealCategory.strCategoryThumb} alt="" />
+                <p>{mealCategory.strCategoryDescription}</p>
+              </button>
+            );
+          })}
+        </div>
+      )}
       <button
         onClick={() => topFunction()}
         id="toTheTop"
@@ -126,5 +162,4 @@ const ListAll = () => {
     </div>
   );
 };
-
 export default ListAll;

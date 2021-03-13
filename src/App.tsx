@@ -1,35 +1,32 @@
-import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
-import {
-  About,
-  Home,
-  ListAll,
-  Random,
-  Navbar,
-} from "./components/AllComponents";
+import { lazy, Suspense } from 'react';
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+import { Home, ListAll, Random, Navbar } from './components/AllComponents';
+
+const About = lazy(() => import('./components/About'));
 
 function App() {
   return (
-    <Router>
-      <div className="App">
-        <Navbar />
-        <div className="content">
-          <Switch>
-            <Route exact path="/">
-              <Home />
-            </Route>
-            <Route path="/all">
-              <ListAll />
-            </Route>
-            <Route path="/random">
-              <Random />
-            </Route>
-            <Route path="/about">
-              <About />
-            </Route>
-          </Switch>
+    <Suspense fallback={<div>Loading...</div>}>
+      <Router>
+        <div className="App">
+          <Navbar />
+          <div className="content">
+            <Switch>
+              <Route exact path="/">
+                <Home />
+              </Route>
+              <Route path="/all">
+                <ListAll />
+              </Route>
+              <Route path="/random">
+                <Random />
+              </Route>
+              <Route path="/about" component={About} />
+            </Switch>
+          </div>
         </div>
-      </div>
-    </Router>
+      </Router>
+    </Suspense>
   );
 }
 

@@ -1,14 +1,18 @@
-import { AllMealCategories, MealByName } from "global";
-import { useEffect, useRef, useState } from "react";
-import { getAllMealCategories, getMealByName } from "src/utils/fetchData";
+import { AllMealCategories, MealByName } from 'global';
+import { useEffect, useRef, useState } from 'react';
+import { getAllMealCategories, getMealByName } from 'src/utils/fetchData';
 
 const ListAll = () => {
   const [input, setInput] = useState<HTMLInputElement>();
   const [allMealCategories, setAllMealCategories] = useState<
     AllMealCategories[]
   >([]);
-  const [searchMeal, setSearchMeal] = useState<MealByName[]>([]);
-  const [ingredients, setIngredients] = useState<String[][]>([]);
+  const [searchMeal, setSearchMeal] = useState<MealByName[] | undefined>(
+    undefined
+  );
+  const [ingredients, setIngredients] = useState<String[][] | undefined>(
+    undefined
+  );
   const inputRef = useRef<HTMLInputElement>(null);
   const scrollButton = useRef<HTMLButtonElement>(null);
 
@@ -18,7 +22,7 @@ const ListAll = () => {
     setAllMealCategories(allMeal);
     let input = inputRef?.current;
     if (input) {
-      input.value = "";
+      input.value = '';
     }
   };
 
@@ -31,7 +35,7 @@ const ListAll = () => {
       meal?.forEach((meal) => {
         let eachArray: String[] = [];
         Object?.entries(meal)?.forEach((elm) => {
-          if (elm[0].startsWith("strIngredient") && elm[1]) {
+          if (elm[0].startsWith('strIngredient') && elm[1]) {
             eachArray.push(elm[1]);
           }
         });
@@ -45,7 +49,7 @@ const ListAll = () => {
   const getSelectedCategory = (
     e: React.MouseEvent<HTMLButtonElement, MouseEvent>
   ) => {
-    console.log(e.currentTarget.getAttribute("data-category"));
+    console.log(e.currentTarget.getAttribute('data-category'));
   };
 
   window.onscroll = () => {
@@ -54,7 +58,7 @@ const ListAll = () => {
   const topFunction = () => {
     window.scrollTo({
       top: 0,
-      behavior: "smooth",
+      behavior: 'smooth',
     });
   };
 
@@ -65,9 +69,9 @@ const ListAll = () => {
         document.documentElement.scrollTop > 20 ||
         document.body.scrollTop > 20
       ) {
-        buttonElm.style.display = "inline-block";
+        buttonElm.style.display = 'inline-block';
       } else {
-        buttonElm.style.display = "none";
+        buttonElm.style.display = 'none';
       }
     }
   };
@@ -75,9 +79,11 @@ const ListAll = () => {
   useEffect(() => {
     console.log(allMealCategories);
   }, [allMealCategories]);
+
   useEffect(() => {
     if (inputRef?.current) setInput(inputRef?.current);
   }, []);
+
   return (
     <div>
       <div className="listall-triggers">
@@ -85,11 +91,11 @@ const ListAll = () => {
           className="listall-input"
           type="text"
           placeholder="Search Meal by Name"
-          onBlur={() => inputFunction()}
+          onBlur={inputFunction}
           ref={inputRef}
         />
         <div className="listall-button">
-          <button onClick={() => listAllMealCategories()} className="button">
+          <button onClick={listAllMealCategories} className="button">
             List All Meal Categories
           </button>
         </div>
@@ -99,34 +105,40 @@ const ListAll = () => {
           {searchMeal?.map((meal, index) => {
             return (
               <div className="searchedMeal" key={index}>
-                <h2 style={{ color: "#550527" }}>{meal.strMeal}</h2>
+                <h2 style={{ color: '#550527' }}>{meal.strMeal}</h2>
                 <img className="searchMealImg" src={meal.strMealThumb} alt="" />
-                <h4 style={{ color: "#550527" }}>
+                <h4 style={{ color: '#550527' }}>
                   Category : {meal.strCategory}
                 </h4>
-                <h4 style={{ alignSelf: "start", color: "#550527" }}>
+                <h4 style={{ alignSelf: 'start', color: '#550527' }}>
                   Instructions
                 </h4>
-                <p style={{ textAlign: "start" }}>{meal.strInstructions}</p>
+                <p style={{ textAlign: 'start' }}>{meal.strInstructions}</p>
                 <br />
-                <h4 style={{ alignSelf: "start", color: "#550527" }}>
-                  Ingredients{" "}
+                <h4 style={{ alignSelf: 'start', color: '#550527' }}>
+                  Ingredients{' '}
                 </h4>
                 <div className="list-all-ingredients">
-                  {ingredients[index].map((ingredient, ownIndex) => {
-                    return (
-                      <div
-                        className="list-all-ingredient"
-                        key={index + ownIndex}
-                      >
-                        <img
-                          src={`https://www.themealdb.com/images/ingredients/${ingredient}.png`}
-                          alt=""
-                        />
-                        <h5 style={{ textAlign: "center" }}>{ingredient}</h5>
-                      </div>
-                    );
-                  })}
+                  {ingredients && (
+                    <>
+                      {ingredients[index]?.map((ingredient, ownIndex) => {
+                        return (
+                          <div
+                            className="list-all-ingredient"
+                            key={`${index}${ownIndex}`}
+                          >
+                            <img
+                              src={`https://www.themealdb.com/images/ingredients/${ingredient}.png`}
+                              alt=""
+                            />
+                            <h5 style={{ textAlign: 'center' }}>
+                              {ingredient}
+                            </h5>
+                          </div>
+                        );
+                      })}
+                    </>
+                  )}
                 </div>
               </div>
             );
@@ -143,7 +155,7 @@ const ListAll = () => {
                 data-category={mealCategory.strCategory}
                 onClick={(e) => getSelectedCategory(e)}
               >
-                <h1 style={{ color: "#550527" }}>{mealCategory.strCategory}</h1>
+                <h1 style={{ color: '#550527' }}>{mealCategory.strCategory}</h1>
                 <img src={mealCategory.strCategoryThumb} alt="" />
                 <p>{mealCategory.strCategoryDescription}</p>
               </button>

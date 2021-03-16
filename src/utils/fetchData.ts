@@ -1,5 +1,5 @@
 import axios from "axios";
-import {AllMealCategories, MealByName, RandomMeal, selectedMealCategory} from "global";
+import {AllMealCategories, MealByName, RandomMeal, SelectedMeal, selectedMealCategory} from "global";
 
 export const getRandomMeal = async () => {
     const response = await axios.get(
@@ -25,4 +25,10 @@ export const getCategoryMeals = async(category:string) => {
   const response = await axios.get(`https://www.themealdb.com/api/json/v1/1/filter.php?c=${category}`)
   const { meals = []} = await response.data
   return meals as selectedMealCategory[]
-} 
+}
+
+export const getSelectedMeal = async(idMeal:string) => {
+  const response = await axios.get(`https://www.themealdb.com/api/json/v1/1/lookup.php?i=${idMeal}`)
+  const {meals = []} = await response.data
+  return meals as SelectedMeal[]
+}

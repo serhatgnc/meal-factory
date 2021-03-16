@@ -1,47 +1,68 @@
-import { AllMealCategories, MealByName, selectedMealCategory } from "global";
 import { useEffect, useRef, useState } from "react";
-import AllMealCategory from "src/components/AllMealCategory";
-import Search from "src/components/Search";
-import SelectedCategoryMeal from "src/components/SelectedCategoryMeal";
+import {
+  AllMealCategories,
+  MealByName,
+  SelectedMeal,
+  selectedMealCategory,
+} from "global";
+import {
+  Search,
+  AllMealCategory,
+  SelectedCategoryMeal,
+  SelectedMealComponent,
+} from "../components/AllComponents";
+import {
+  pageTransition,
+  scrollFunction,
+  topFunction,
+} from "src/utils/constants";
 import { getAllMealCategories, getMealByName } from "src/utils/fetchData";
+import { motion as m } from "framer-motion";
 
 const ListAll = () => {
-  const [input, setInput] = useState<HTMLInputElement>();
-  const [allMealCategories, setAllMealCategories] = useState<
-    AllMealCategories[]
-  >([]);
   const [searchMeal, setSearchMeal] = useState<MealByName[] | undefined>(
     undefined
   );
-  const [selectedCategoryMeals, setSelectedCategoryMeals] = useState<
-    selectedMealCategory[]
-  >();
   const [ingredients, setIngredients] = useState<string[][] | undefined>(
     undefined
   );
+  const [allMealCategories, setAllMealCategories] = useState<
+    AllMealCategories[]
+  >([]);
+  const [selectedCategoryMeals, setSelectedCategoryMeals] = useState<
+    selectedMealCategory[]
+  >();
+  const [selectedMeal, setSelectedMeal] = useState<SelectedMeal[] | undefined>(
+    undefined
+  );
+  const [input, setInput] = useState<HTMLInputElement>();
   const inputRef = useRef<HTMLInputElement>(null);
   const scrollButton = useRef<HTMLButtonElement>(null);
 
   const listAllMealCategories = async () => {
+    setSelectedMeal([]);
     setSelectedCategoryMeals([]);
     setSearchMeal([]);
-    let allMeal = await getAllMealCategories();
+    const allMeal = await getAllMealCategories();
     setAllMealCategories(allMeal);
-    let input = inputRef?.current;
+    const input = inputRef?.current;
     if (input) {
       input.value = "";
     }
   };
 
   const inputFunction = async () => {
-    setSelectedCategoryMeals([]);
-    setAllMealCategories([]);
-    let searchTerm: string | undefined = input?.value;
+    const searchTerm: string | undefined = input?.value;
+    if (searchTerm !== "") {
+      setSelectedMeal([]);
+      setSelectedCategoryMeals([]);
+      setAllMealCategories([]);
+    }
     if (searchTerm) {
-      let meal = await getMealByName(searchTerm);
-      let arrayIngredients: string[][] = [];
+      const meal = await getMealByName(searchTerm);
+      const arrayIngredients: string[][] = [];
       meal?.forEach((meal) => {
-        let eachArray: string[] = [];
+        const eachArray: string[] = [];
         Object?.entries(meal)?.forEach((elm) => {
           if (elm[0].startsWith("strIngredient") && elm[1]) {
             eachArray.push(elm[1]);
@@ -55,58 +76,44 @@ const ListAll = () => {
   };
 
   window.onscroll = () => {
-    scrollFunction();
-  };
-  const topFunction = () => {
-    window.scrollTo({
-      top: 0,
-      behavior: "smooth",
-    });
+    scrollFunction(scrollButton);
   };
 
-  const scrollFunction = () => {
-    if (scrollButton && scrollButton.current) {
-      var buttonElm = scrollButton?.current as HTMLButtonElement;
-      if (
-        document.documentElement.scrollTop > 20 ||
-        document.body.scrollTop > 20
-      ) {
-        buttonElm.style.display = "inline-block";
-      } else {
-        buttonElm.style.display = "none";
-      }
-    }
-  };
-
-  // useEffect(() => {
-  //   console.log(searchMeal);
-  // }, [searchMeal]);
   useEffect(() => {
     if (inputRef?.current) setInput(inputRef?.current);
   }, []);
-  useEffect(() => {
-    console.log(selectedCategoryMeals);
-  }, [selectedCategoryMeals]);
+
   return (
-    <div className="listall">
-      <div className="listall-triggers">
-        <input
+    <div
+      className="listall"
+      style={selectedMeal ? { backgroundImage: "none" } : {}}
+    >
+      <m.div
+        className="listall-triggers"
+        initial="hidden"
+        animate="visible"
+        variants={pageTransition}
+      >
+        <m.input
           className="listall-input"
           type="text"
           placeholder="Search Meal by Name"
           onBlur={inputFunction}
           ref={inputRef}
+          whileTap={{ scale: 0.95 }}
         />
         <div className="listall-button">
-          <button
+          <m.button
             onClick={listAllMealCategories}
             className="button"
             title="pick a category to list all meals from that category"
+            whileTap={{ scale: 0.95 }}
           >
             List All Meal Categories
-          </button>
+          </m.button>
         </div>
-      </div>
+      </m.div>
+
       {searchMeal && (
         <div className="search">
           {searchMeal?.map((meal, index) => {
@@ -140,10 +147,26 @@ const ListAll = () => {
         <div className="selected-category-meals">
           {selectedCategoryMeals?.map((meal, index) => {
             return (
-              <SelectedCategoryMeal key={index} index={index} meal={meal} />
+              <SelectedCategoryMeal
+                idMeal={meal.idMeal}
+                key={index}
+                index={index}
+                meal={meal}
+                setSelectedMeal={setSelectedMeal}
+                setAllMealCategories={setAllMealCategories}
+                setSearchMeal={setSearchMeal}
+                setSelectedCategoryMeals={setSelectedCategoryMeals}
+              />
             );
           })}
         </div>
+      )}
+      {selectedMeal && (
+        <>
+          {selectedMeal?.map((meal, index) => {
+            return <SelectedMealComponent meal={meal} key={index} />;
+          })}
+        </>
       )}
       <button
         onClick={() => topFunction()}

@@ -2,6 +2,8 @@ import { RandomMeal } from "global";
 import { useEffect, useState } from "react";
 import { debounce } from "src/utils/debounce";
 import { getRandomMeal } from "../utils/fetchData";
+import { motion as m } from "framer-motion";
+import { pageTransition } from "src/utils/constants";
 
 const Random = () => {
   const [randomMeal, setRandomMeal] = useState<RandomMeal[] | undefined>(
@@ -16,7 +18,6 @@ const Random = () => {
     try {
       const meal = await getRandomMeal();
       const arrayIngredient: String[] = [];
-
       Object?.entries(meal[0])?.forEach((ingredient) => {
         if (ingredient[0].startsWith("strIngredient") && ingredient[1]) {
           arrayIngredient.push(ingredient[1]);
@@ -34,12 +35,13 @@ const Random = () => {
     randomMealFunction();
   }, []);
 
-  if (error) {
-    return <div>Error...!</div>;
-  } // -**********************
-
   return (
-    <div className="random">
+    <m.div
+      className="random"
+      initial="hidden"
+      animate="visible"
+      variants={pageTransition}
+    >
       {randomMeal && (
         <>
           <div className="img-random">
@@ -88,9 +90,10 @@ const Random = () => {
               })}
             </div>
           </div>
+          {error && <div>Error...!</div>}
         </>
       )}
-    </div>
+    </m.div>
   );
 };
 

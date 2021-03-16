@@ -10,7 +10,11 @@ const Search = ({ meal, index, ingredients }: SearchProps) => {
   return (
     <div className="searchedMeal" key={index}>
       <h1 style={{ color: "#550527" }}>{meal.strMeal}</h1>
-      <img className="searchMealImg" src={meal.strMealThumb} alt="" />
+      <img
+        className="searchMealImg"
+        src={meal.strMealThumb}
+        alt=""
+      />
       <h4 style={{ color: "#550527" }}>Origin : {meal.strArea}</h4>
       <h4 style={{ color: "#550527" }}>Category : {meal.strCategory}</h4>
       <h3 style={{ alignSelf: "start", color: "#550527" }}>Instructions</h3>

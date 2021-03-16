@@ -9,6 +9,8 @@ export type RandomMeal = {
 
 export type MealByName = RandomMeal;
 
+export type SelectedMeal = RandomMeal;
+
 export type AllMealCategories = {
   strCategory: string;
   strCategoryDescription: string;

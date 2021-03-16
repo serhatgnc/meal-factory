@@ -1,32 +1,29 @@
-import { lazy, Suspense } from 'react';
-import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
-import { Home, ListAll, Random, Navbar } from './components/AllComponents';
+import { lazy, Suspense } from "react";
+import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+import Navbar from "./components/Navbar";
 
-const About = lazy(() => import('./components/About'));
+const About = lazy(() => import("./pages/About"));
+const Home = lazy(() => import("./pages/Home"));
+const ListAll = lazy(() => import("./pages/ListAll"));
+const Random = lazy(() => import("./pages/Random"));
 
 function App() {
   return (
-    <Suspense fallback={<div>Loading...</div>}>
-      <Router>
-        <div className="App">
-          <Navbar />
-          <div className="content">
+    <Router>
+      <div className="App">
+        <Navbar />
+        <div className="content">
+          <Suspense fallback={<div>Loading...</div>}>
             <Switch>
-              <Route exact path="/">
-                <Home />
-              </Route>
-              <Route path="/all">
-                <ListAll />
-              </Route>
-              <Route path="/random">
-                <Random />
-              </Route>
+              <Route exact path="/" component={Home} />
+              <Route path="/all" component={ListAll} />
+              <Route path="/random" component={Random} />
               <Route path="/about" component={About} />
             </Switch>
-          </div>
+          </Suspense>
         </div>
-      </Router>
-    </Suspense>
+      </div>
+    </Router>
   );
 }
 

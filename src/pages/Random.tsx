@@ -1,7 +1,7 @@
-import { RandomMeal } from 'global';
-import { useEffect, useState } from 'react';
-import { debounce } from 'src/utils/debounce';
-import { getRandomMeal } from '../utils/fetchData';
+import { RandomMeal } from "global";
+import { useEffect, useState } from "react";
+import { debounce } from "src/utils/debounce";
+import { getRandomMeal } from "../utils/fetchData";
 
 const Random = () => {
   const [randomMeal, setRandomMeal] = useState<RandomMeal[] | undefined>(
@@ -11,7 +11,6 @@ const Random = () => {
     undefined
   );
   const [error, setError] = useState<string | undefined>(undefined);
-  const [counter, setCounter] = useState(0);
 
   const randomMealFunction = async () => {
     try {
@@ -19,7 +18,7 @@ const Random = () => {
       const arrayIngredient: String[] = [];
 
       Object?.entries(meal[0])?.forEach((ingredient) => {
-        if (ingredient[0].startsWith('strIngredient') && ingredient[1]) {
+        if (ingredient[0].startsWith("strIngredient") && ingredient[1]) {
           arrayIngredient.push(ingredient[1]);
         }
       });
@@ -37,13 +36,10 @@ const Random = () => {
 
   if (error) {
     return <div>Error...!</div>;
-  }
+  } // -**********************
 
   return (
     <div className="random">
-      <button onClick={() => setCounter((prevState) => prevState + 1)}>
-        {counter}
-      </button>
       {randomMeal && (
         <>
           <div className="img-random">
@@ -62,11 +58,14 @@ const Random = () => {
             </div>
           </div>
           <div className="text-random">
-            <h1 style={{ textAlign: 'center' }}>{randomMeal[0]?.strMeal}</h1>
-            <h3 style={{ opacity: 0.9, userSelect: 'none' }}>Instructions</h3>
-            <p>{randomMeal[0]?.strInstructions}</p>
+            <h1 style={{ textAlign: "center" }}>{randomMeal[0]?.strMeal}</h1>
+            <br />
+            <h4 style={{ opacity: 0.9, userSelect: "none" }}>Instructions</h4>
+            <p className="instruction-random">
+              {randomMeal[0]?.strInstructions}
+            </p>
             <hr className="rounded" />
-            <h3 style={{ opacity: 0.9, userSelect: 'none' }}>Ingredients</h3>
+            <h3 style={{ opacity: 0.9, userSelect: "none" }}>Ingredients</h3>
             <div className="ingredients">
               {ingredients?.map((ingredient, index) => {
                 return (
@@ -75,7 +74,15 @@ const Random = () => {
                       src={`https://www.themealdb.com/images/ingredients/${ingredient}.png`}
                       alt=""
                     />
-                    <p style={{ fontSize: '0.75em' }}>{ingredient}</p>
+                    <p
+                      style={{
+                        fontSize: "0.75em",
+                        fontWeight: 300,
+                        color: "#241909",
+                      }}
+                    >
+                      {ingredient}
+                    </p>
                   </div>
                 );
               })}

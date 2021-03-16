@@ -14,3 +14,9 @@ export type AllMealCategories = {
   strCategoryDescription: string;
   strCategoryThumb: string;
 };
+
+export type selectedMealCategory={
+  strMeal:string;
+  strMealThumb:string;
+  idMeal:string;
+};

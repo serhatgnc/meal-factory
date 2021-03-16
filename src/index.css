@@ -10,7 +10,7 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  background-color: #d5dbbd;
+  background-color: #fcfafa;
 }
 
 code {
@@ -19,13 +19,12 @@ code {
 }
 
 .App {
-  font-family: "Kanit", sans-serif;
+  font-family: "Ubuntu", sans-serif;
   height: 100%;
   width: 100%;
 }
 /* Nav */
 .nav {
-  background-color: #de8f6e;
   max-height: 20%;
   display: flex;
   justify-content: space-between;
@@ -33,21 +32,26 @@ code {
   padding: 1.5em 3em;
 }
 .nav-right {
-  width: 30em;
+  width: 50em;
   height: 3em;
   display: flex;
-  justify-content: space-between;
+  justify-content: space-evenly;
   align-items: center;
+  margin-right: 5em;
 }
 .nav-right a {
   text-decoration: none;
-  color: #550527;
-  font-weight: 600;
+  color: #241909;
+  font-weight: 400;
   font-size: 1.5em;
+  letter-spacing: 0.15em;
+  user-select: none;
 }
 .nav-right a:hover {
-  color: #e6e49f;
-  border-bottom: 0.1em solid #e6e49f;
+  border-top-left-radius: 0.15em;
+  border-top-right-radius: 0.15em;
+  color: #FF725F;
+  border-bottom: 0.15em solid #FF725F;
 }
 .nav-left {
   display: flex;
@@ -57,7 +61,7 @@ code {
   font-family: "Great Vibes", cursive;
   letter-spacing: 0.25em;
   font-size: 1.5em;
-  color: #550527;
+  color: #241909;
   user-select: none;
 }
 /* SHARED DIV */
@@ -71,7 +75,7 @@ code {
 }
 /* RANDOM */
 .random {
-  color: #634740;
+  color: #FF725F;
   display: flex;
   justify-content: space-evenly;
   align-items: center;
@@ -79,28 +83,32 @@ code {
 }
 .random .text-random {
   font-size: 1.5em;
-  width: 45em;
-  font-weight: 300;
+  width: 40em;
+  font-weight: 400;
+  line-height: 1.75em;
   height: 100%;
-  margin-left: 0.5em;
-  margin-right: 0.5em;
+  margin-right: 2em;
+}
+.random .text-random .instruction-random{
+  font-size: 0.9em;
+  font-weight: 400;
+  letter-spacing: 0.1em;
+  color: #241909;
 }
 .random .img-random {
   text-align: center;
+  margin: 0 2em;
 }
 .random .img-random img {
-  width: 25em;
-  border-radius: 0.5em;
-  margin-left: 0.5em;
+  width: 35em;
+  border-radius: 1em;
 }
 .rounded {
   display: flex;
   border-top: 2px solid #464646;
   border-radius: 10px;
-  margin-top: 0.5em;
-  margin-bottom: 0.5em;
   width: 100%;
-  margin: 0 auto;
+  margin: 0.5em auto;
 }
 .ingredients {
   display: flex;
@@ -109,7 +117,7 @@ code {
   user-select: none;
 }
 .ingredients .ingredient {
-  margin-left: 0.5em;
+  margin: 0.3em;
 }
 .ingredients img {
   width: 5em;
@@ -131,34 +139,26 @@ code {
   align-items: center;
 }
 .listall-button {
-  width: 15em;
+  width: 16em;
   height: 100%;
   display: flex;
   justify-content: center;
   align-items: center;
+  user-select: none;
 }
 .listall-input {
   text-align: center;
   outline: none;
-  background-color: #de8f6e;
-  color: #550527;
-  font-family: "Kanit";
+  background-color: #fcfafa;
+  color: #FF725F;
+  font-family: Ubuntu;
   font-size: 1.25em;
   font-weight: 500;
-  border: none;
+  border: 1.5px solid #241909;
   border-radius: 5em;
   padding: 0.2em;
 }
 /* input */
-.listAll-divider {
-  display: flex;
-  border-top: 2px solid #464646;
-  border-radius: 10px;
-  margin-top: 0.5em;
-  margin-bottom: 0.5em;
-  width: 90%;
-  margin: 0 auto;
-}
 .search {
   width: 100%;
   display: flex;
@@ -171,15 +171,24 @@ code {
   display: flex;
   flex-direction: column;
   align-items: center;
-  background-color: #cddfa0;
-  border: 2px solid #550527;
-  border-radius: 3em;
+  background-color: #ccc;
+  border: none;
+  border-radius: 5em;
   margin: 1em;
+  box-shadow: 0 0.3em 1em 0.01em black;
+}
+.search-instructions{
+  text-align: start;
+  font-size: 1.2em;
+  font-weight: 400;
+  font-style: italic;
+  line-height: 1.5em;
+  color: #241909;
 }
 .searchMealImg {
   width: 15em;
   border: none;
-  border-radius: 0.5em;
+  border-radius: 1em;
 }
 .list-all-ingredients {
   display: flex;
@@ -195,56 +204,108 @@ code {
   flex-direction: column;
 }
 .list-all-ingredients .list-all-ingredient img {
-  width: 3em;
+  width: 4em;
 }
-/* allmeal & its buttons */
+/* allmealcategory & its buttons */
 .allMealCategory {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
 }
-.allMealCategory .mealCategory {
-  margin: 1em 2em;
-  padding: 5em;
-  width: 51em;
-  height: 55em;
+.allMealCategory .mealCategoryButton {
+  margin: 1em 1em;
+  padding: 2em;
+  width: 30em;
   cursor: pointer;
-  background-color: #cddfa0;
-  border: 5px solid #550527;
-  border-radius: 50%;
+  background-color: #ccc;
+  border: none;
   outline: none;
+  border-radius: 50%;
+  box-shadow: 0 0.3em 1em 0.01em black;
+}
+.allMealCategory .mealCategoryButton .mealCategory{
+  width: 100%;
+  height: 100%;
+}
+.allMealCategory .mealCategoryButton p {
+  font-family: Ubuntu;
+  font-size: 1.4em;
+  text-align: left;
+  font-style: italic;
+  font-weight: 400;
+  color: #241909;
+  line-height: 1.75em;
+}
+.allMealCategory .mealCategoryButton img{
+  width: 20em;
+  border-radius: 4em;
+}
+.allMealCategory .mealCategoryButton:hover {
+  background-color: #FF725F;
+}
+.home{
+  height: 100%;
+  background: url("./img/landingImg.svg") no-repeat bottom right;
+  background-size: 950px;
+}
+.listall{
+  width: 100%;
+  height: 100%;
+  background: url("./img/allMeal2.svg") no-repeat center;
+  background-size: 950px;
+}
+
+.selected-category-meals{
+  width: 100%;
   display: flex;
+  flex-wrap: wrap;
   justify-content: center;
   align-items: center;
+}
+.selected-category-meal{
+  display: flex;
   flex-direction: column;
+  align-items: center;
+  width: 17em;
+  height: 20em;
+  justify-content: space-between;
+  margin: 2em 0.5em;
+  background-color: #ccc;
+  border-radius: 1.5em;
 }
-.allMealCategory .mealCategory p {
-  font-family: "Kanit";
-  font-size: 1.2em;
-  width: 90%;
-  margin-bottom: 6em;
-  text-align: left;
+.selected-category-meal-button{
+  outline: none;
+  width: 20em;
+  height: 20em;
+  border-radius: 2em;
+  border: none;
+  box-shadow: 0 0.3em 1em 0.01em black;
 }
-.allMealCategory .mealCategory:hover {
-  border-color: #de8f6e;
+.selected-category-meal-button:hover{
+  border:1px solid #241909;
+  opacity: 0.8;
+}
+.about{
+  height: 100%;
+  background: url("./img/about.svg") no-repeat center;
+  background-size: 1500px;
 }
 /* Global */
 .button {
-  font-family: "Kanit";
+  font-family: "Ubuntu";
   font-size: 1.25em;
   font-weight: 500;
   padding: 0.2em 0.5em;
-  border: none;
-  background-color: #de8f6e;
-  color: #550527;
+  border: 1.5px solid #241909;
+  background-color: #fcfafa;
+  color: #241909;
   border-radius: 5em;
   outline: none;
   cursor: pointer;
 }
 .button:hover {
-  background-color: #550527;
-  color: #de8f6e;
-  border: 1px solid #de8f6e;
+  background-color: #FF725F;
+  color: #fcfafa;
 }
 #toTheTop {
   display: none;
@@ -253,14 +314,14 @@ code {
   margin-left: 1em;
   z-index: 99;
   font-size: 1.25em;
-  background-color: #550527;
+  background-color: #241909;
   border: none;
   outline: none;
   cursor: pointer;
   padding: 0.1em;
   border-radius: 50%;
-  color: #cddfa0;
+  color: #fcfafa;
 }
 #toTheTop:hover {
-  color: #e6e49f;
+  color: #FF725F;
 }

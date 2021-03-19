@@ -1,6 +1,6 @@
-export const debounce = (fnc:() => Promise<void> , delay:number) => {
+export const debounce = (fnc: Function , delay:number) => {
     let timeout:any
-    return function() {
+    return () =>{
         if(timeout)clearTimeout(timeout)
         timeout = setTimeout(() => {
             fnc()

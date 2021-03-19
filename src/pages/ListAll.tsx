@@ -18,6 +18,7 @@ import {
 } from "src/utils/constants";
 import { getAllMealCategories, getMealByName } from "src/utils/fetchData";
 import { motion as m } from "framer-motion";
+import { debounce } from "src/utils/debounce";
 
 const ListAll = () => {
   const [searchMeal, setSearchMeal] = useState<MealByName[] | undefined>(
@@ -98,7 +99,7 @@ const ListAll = () => {
           className="listall-input"
           type="text"
           placeholder="Search Meal by Name"
-          onBlur={inputFunction}
+          onChange={debounce(inputFunction, 1000)}
           ref={inputRef}
           whileTap={{ scale: 0.95 }}
         />
@@ -133,7 +134,6 @@ const ListAll = () => {
           {allMealCategories?.map((mealCategory, index) => {
             return (
               <AllMealCategory
-                index={index}
                 key={index}
                 mealCategory={mealCategory}
                 setAllMealCategories={setAllMealCategories}
@@ -150,11 +150,8 @@ const ListAll = () => {
               <SelectedCategoryMeal
                 idMeal={meal.idMeal}
                 key={index}
-                index={index}
                 meal={meal}
                 setSelectedMeal={setSelectedMeal}
-                setAllMealCategories={setAllMealCategories}
-                setSearchMeal={setSearchMeal}
                 setSelectedCategoryMeals={setSelectedCategoryMeals}
               />
             );

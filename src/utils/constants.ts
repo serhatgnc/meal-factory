@@ -21,12 +21,10 @@ export const topFunction = () => {
 
 export const scrollFunction = (scrollButton : React.RefObject<HTMLButtonElement>) => {
     if (scrollButton && scrollButton.current) {
-      var buttonElm = scrollButton?.current as HTMLButtonElement;
+      const buttonElm = scrollButton?.current as HTMLButtonElement;
       if (
-        document.documentElement.scrollTop > 20 ||
-        document.body.scrollTop > 20
-      ) {
-        buttonElm.style.display = "inline-block";
+        document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
+        buttonElm.style.display = "block";
       } else {
         buttonElm.style.display = "none";
       }

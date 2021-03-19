@@ -39,14 +39,14 @@ const SelectedMealComponent = ({ meal }: SelectedMealComponentProps) => {
       variants={pageTransition}
     >
       <div className="img-random">
-        <img src={meal.strMealThumb} alt="" />
+        <img src={meal.strMealThumb} alt="" loading="lazy" />
         <p style={{ fontWeight: 500 }}>Origin : {meal.strArea}</p>
         <p style={{ fontWeight: 500 }}>Category : {meal.strCategory}</p>
       </div>
       <div className="text-random">
         <h1 style={{ textAlign: "center" }}>{meal.strMeal}</h1>
         <br />
-        <h4 style={{ opacity: 0.9, userSelect: "none" }}>Instructions</h4>
+        <h3 style={{ opacity: 0.9, userSelect: "none" }}>Instructions</h3>
         <p className="instruction-random">{meal.strInstructions}</p>
         <hr className="rounded" />
         <h3 style={{ opacity: 0.9, userSelect: "none" }}>Ingredients</h3>
@@ -57,12 +57,14 @@ const SelectedMealComponent = ({ meal }: SelectedMealComponentProps) => {
                 <img
                   src={`https://www.themealdb.com/images/ingredients/${ingredient}.png`}
                   alt=""
+                  loading="lazy"
                 />
                 <p
                   style={{
                     fontSize: "0.75em",
                     fontWeight: 300,
                     color: "#241909",
+                    fontStyle: "italic",
                   }}
                 >
                   {ingredient}

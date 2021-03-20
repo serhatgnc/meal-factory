@@ -10,7 +10,7 @@ export const getRandomMeal = async () => {
   };
 
 export const getMealByName = async (searchTerm:string) => {
-  const response = await axios.get(`https:www.themealdb.com/api/json/v1/1/search.php?s=${searchTerm}`)
+  const response = await axios.get(`https://www.themealdb.com/api/json/v1/1/search.php?s=${searchTerm}`)
   const { meals = []} = await response.data
   return meals as MealByName[];
 };

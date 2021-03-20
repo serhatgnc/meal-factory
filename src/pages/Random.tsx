@@ -4,7 +4,6 @@ import { debounce } from "src/utils/debounce";
 import { getRandomMeal } from "../utils/fetchData";
 import { motion as m } from "framer-motion";
 import { pageTransition } from "src/utils/constants";
-import { throttle } from "src/utils/throttle";
 
 const Random = () => {
   const [randomMeal, setRandomMeal] = useState<RandomMeal[] | undefined>(

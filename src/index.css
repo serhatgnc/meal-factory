@@ -173,7 +173,6 @@ code {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
-  align-items: center;
 }
 .searchedMeal {
   padding: 1.5em;
